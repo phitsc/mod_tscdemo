@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+// Returns a vector of substrings, created by splitting the
+// string s using the divider character.
 std::vector<std::string> split(const std::string& s, char divider)
 {
     std::vector<std::string> result;
