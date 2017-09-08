@@ -69,7 +69,7 @@ static int tscdemo_handler(request_rec* r)
     std::vector<StringPair> fieldValueList(argumentList.size());
 
     std::transform(argumentList.begin(), argumentList.end(), fieldValueList.begin(),
-        [](const std::string& s) -> StringPair
+        [](const std::string& s)
         {
             const auto fieldValue = split(s, "=");
 
