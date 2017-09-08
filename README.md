@@ -1,5 +1,7 @@
 # mod_tscdemo - Apache HTTP Server demo module
 
+https://travis-ci.org/phitsc/mod_tscdemo.svg?branch=master
+
 ## Introduction
 
 This Apache HTTP Server demo module will compare the argument values passed with the request-URI with a list of blacklisted terms configured in `httpd.conf`. If a case-sensitive substring-match is found, the request will be redirected to an error page. Only field values, but not field names, are considered.
