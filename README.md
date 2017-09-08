@@ -19,5 +19,11 @@ An Apache HTTP Server demo module
 
 ## Restart Apache
 
+    apachectl restart
+
+or
+
     docker restart apachedev
+
+to restart the whole container
 
