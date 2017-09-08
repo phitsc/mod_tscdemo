@@ -73,7 +73,7 @@ static int tscdemo_handler(request_rec* r)
     // Print list of arguments
     for (const auto& fieldValue : fieldValueList)
     {
-        ap_rprintf(r, "<li>%s = %s, %i</li>", fieldValue.first.c_str(), fieldValue.second.c_str(), "Wrong Type!");
+        ap_rprintf(r, "<li>%s = %s</li>", fieldValue.first.c_str(), fieldValue.second.c_str());
     }
 
     ap_rputs("</ul>", r);
@@ -88,7 +88,7 @@ static int tscdemo_handler(request_rec* r)
         ap_rprintf(r, "<li>%s</li>", term.c_str());
     }
 
-    ap_rputs("</ul>", r);
+    ap_puts("</ul>", r);
 
     // Find the first field value containing (substring match) any of the
     // blacklisted terms.
