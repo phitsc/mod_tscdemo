@@ -28,8 +28,7 @@ To configure the blacklist, use the *Blacklist* entry with a comma-separated lis
 
 Build a docker image using an Apache image as a base and adding development tools in a second layer.
 
-    cd docker
-    docker build -t http_dev .
+    docker build -t http_dev docker
 
 ## Run Docker Container
 
@@ -39,28 +38,29 @@ Build a docker image using an Apache image as a base and adding development tool
 
 ## Build and Run the Module
 
-Once the container is running, open a bash on the container, build and install the module, and restart Apache to load the module.
+Once the container is running, open a bash on the container.
 
     docker exec -it apachedev bash
+
+Uncomment the *Blacklist* entry in the `httpd.conf` file.
+
+    sed -i '/^#Blacklist.*/s/^#//' /usr/local/apache2/conf/httpd.conf
+
+Build and install the module, and restart Apache to load the module.
+
     cd ~/mod_tscdemo
     ./build.sh
     apachectl restart
 
 `build.sh` first runs static code analysis and if that succeeds, builds, installs and activates the module.
 
-To restart the container:
-
-    docker restart apachedev
-
 ## Build and Run the Tests
 
 To build and run the unit and integration tests:
 
-    docker exec -it apachedev bash
-    cd ~/mod_tscdemo
     ./run_tests.sh
 
-Note that the integration tests will only succeed if a *Blacklist* entry has been added to `httpd.conf` with at least *bar* as one of the blacklist terms.
+Note that the integration tests will only succeed if `httpd.conf` contains a *Blacklist* entry with at least *bar* as one of the blacklist terms.
 
 ## References
 
