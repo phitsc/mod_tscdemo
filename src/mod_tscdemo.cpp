@@ -56,7 +56,12 @@ static const command_rec directives[] =
 
 static int tscdemo_handler(request_rec* r)
 {
-    const std::string args(r->args != nullptr ? r->args : "");
+    if (!r->args)
+    {
+        return DECLINED;
+    }
+
+    const std::string args(r->args);
 
     ap_set_content_type(r, "text/html");
     ap_rputs("<p>Hello, Apache Module++!</p>", r);
