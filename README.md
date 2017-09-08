@@ -1,6 +1,6 @@
 # mod_tscdemo - Apache HTTP Server demo module
 
-https://travis-ci.org/phitsc/mod_tscdemo.svg?branch=master
+[![Build Status](https://travis-ci.org/phitsc/mod_tscdemo.svg?branch=master)](https://travis-ci.org/phitsc/mod_tscdemo)
 
 ## Introduction
 
