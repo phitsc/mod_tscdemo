@@ -12,6 +12,7 @@
 
 using StringPair = std::pair<std::string, std::string>;
 
+// Holds configuration data
 struct Config
 {
     std::vector<std::string> blacklist;
@@ -19,6 +20,8 @@ struct Config
 
 static Config config;
 
+// Parse comma-separated list of blacklisted terms specified in httpd.conf
+// using the Blacklist config entry
 const char* parseBlacklist(cmd_parms* cmd, void* cfg, const char* arg)
 {
     config.blacklist = split(arg, ',');
@@ -32,14 +35,14 @@ static const command_rec directives[] =
     { nullptr }
 };
 
+// The main module handler. Handles every server request with arguments specified, i.e. 
+// something like somefile.html?someField=value
 static int tscdemo_handler(request_rec* r)
 {
     if (!r->args)
     {
         return DECLINED;
     }
-
-    const std::string args(r->args);
 
     ap_set_content_type(r, "text/html");
     ap_rputs("<p>Hello, Apache Module++!</p>", r);
@@ -48,9 +51,13 @@ static int tscdemo_handler(request_rec* r)
 
     ap_rputs("<ul>", r);
 
-    const auto argumentList = split(args, '&');
+    // Parse and split arguments and put them into a vector so they can
+    // be compared against the list of blacklisted terms.
+    const auto argumentList = split(r->args, '&');
     std::vector<StringPair> fieldValueList(argumentList.size());
 
+    // Now split the field names and the field values.
+    // Only field values are considered for blacklisting, not field names.
     std::transform(argumentList.begin(), argumentList.end(), fieldValueList.begin(),
         [](const std::string& s)
         {
@@ -62,6 +69,7 @@ static int tscdemo_handler(request_rec* r)
         }
     );
 
+    // Print list of arguments
     for (const auto& fieldValue : fieldValueList)
     {
         ap_rprintf(r, "<li>%s = %s</li>", fieldValue.first.c_str(), fieldValue.second.c_str());
@@ -69,10 +77,10 @@ static int tscdemo_handler(request_rec* r)
 
     ap_rputs("</ul>", r);
 
+    // Print list of blacklist terms
     ap_rputs("<p>Blacklist:</p>", r);
 
     ap_rputs("<ul>", r);
-
 
     for (const auto& term : config.blacklist)
     {
@@ -81,6 +89,8 @@ static int tscdemo_handler(request_rec* r)
 
     ap_rputs("</ul>", r);
 
+    // Find the first field value containing (substring match) any of the
+    // blacklisted terms.
     const auto it = std::find_first_of(
         fieldValueList.begin(), fieldValueList.end(),
         config.blacklist.begin(), config.blacklist.end(),
