@@ -32,7 +32,7 @@ Build a docker image using an Apache image as a base and adding development tool
 
 ## Run Docker Container
 
-    docker run -dit --name apachedev -v PATH_TO_HTDOCS:/usr/local/apache2/htdocs -v PATH_TO_THIS_MOD_DIR:/root/mod_tscdemo -p 4242:80 httpd_dev
+    docker run -dit --name apachedev -v PATH_TO_HTDOCS:/usr/local/apache2/htdocs -v PATH_TO_THIS_MOD_DIR:/root/mod_tscdemo -w /root/mod_tscdem -p 4242:80 httpd_dev
 
 `PATH_TO_HTDOCS` is the path to the htdocs directory of this repository. `PATH_TO_THIS_MOD_DIR` is the path to the root of this repository.
 
@@ -48,7 +48,6 @@ Uncomment the *Blacklist* entry in the `httpd.conf` file.
 
 Build and install the module, and restart Apache to load the module.
 
-    cd ~/mod_tscdemo
     ./build.sh
     apachectl restart
 
