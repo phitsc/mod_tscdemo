@@ -2,6 +2,7 @@
 #include "httpd.h"
 #include "http_config.h"
 #include "http_protocol.h"
+#include "http_request.h"
 
 #include "split.hpp"
 
@@ -35,7 +36,7 @@ static const command_rec directives[] =
     { nullptr }
 };
 
-// The main module handler. Handles every server request with arguments specified, i.e. 
+// The main module handler. Handles every server request with arguments specified, i.e.
 // something like somefile.html?someField=value
 static int tscdemo_handler(request_rec* r)
 {
@@ -100,9 +101,11 @@ static int tscdemo_handler(request_rec* r)
         }
     );
 
+    // If we found a blacklisted term, redirect to an error page.
     if (it != fieldValueList.end())
     {
-        ap_rprintf(r, "<p>Found blacklisted term <b>%s</b></p>", it->second.c_str());
+        ap_internal_redirect("/error.html", r);
+        // ap_rprintf(r, "<p>Found blacklisted term <b>%s</b></p>", it->second.c_str());
     }
 
     return OK;
