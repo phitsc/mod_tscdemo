@@ -25,6 +25,6 @@ TEST_CASE("Integration Tests", "[mod_tscdemo]")
 
     REQUIRE(
        curl.get("http://localhost/anyfile.html?name=philipp&hello=barbapapa&field=value")
-       .find(errorPage) == std::string::npos
+       .find(errorPage) != std::string::npos
    ); // now it *should* be the error page
 }
