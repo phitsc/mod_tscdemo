@@ -40,7 +40,7 @@ To restart the container:
 
 ## Build and Run the Tests
 
-To build and run the unit tests:
+To build and run the unit and integration tests:
 
     docker exec -it apachedev bash
     cd ~/mod_tscdemo
