@@ -109,7 +109,7 @@ static int tscdemo_handler(request_rec* r)
 
     if (it != fieldValueList.end())
     {
-        ap_rprintf(r, "<p>Found %s</p>", it->second.c_str());
+        ap_rprintf(r, "<p>Found blacklisted term <b>%s</b></p>", it->second.c_str());
     }
 
     return OK;
