@@ -1,4 +1,4 @@
-# mod_tscdemo
+# mod_tscdemo - Apache HTTP Server demo module
 
 ## Introduction
 
@@ -18,8 +18,8 @@ Use the following, or similar, URIs to test the module.
 
 ## What this project demonstrates
 
-* Use of Docker for Apache HTTP server module development
-* Building Apache HTTP server modules using C++
+* Use of Docker for Apache HTTP Server module development
+* Building Apache HTTP Server modules using C++
 * Minimal but meaningful module functionality
 * Static code analysis using cppcheck, including checking of `ap_rprintf`  string formatting
 * Unit-testing the module using Catch (http://catch-lib.net)
