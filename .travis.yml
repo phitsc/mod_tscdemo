@@ -5,11 +5,10 @@ services:
 
 before_install:
   - docker build -t httpd_dev docker
-  - docker run -d -v $TRAVIS_BUILD_DIR/htdocs:/usr/local/apache2/htdocs -v $TRAVIS_BUILD_DIR:/root/mod_tscdemo -p 127.0.0.1:4242:80 httpd_dev
+  - docker run -d --name apachedev -v $TRAVIS_BUILD_DIR/htdocs:/usr/local/apache2/htdocs -v $TRAVIS_BUILD_DIR:/root/mod_tscdemo -w /root/mod_tscdemo -p 127.0.0.1:4242:80 httpd_dev
 
 script:
-  - sed -i '/^#Blacklist.*/s/^#//' /usr/local/apache2/conf/httpd.conf
-  - cd /root/mod_tscdemo
-  - ./build.sh
-  - apachectl restart
-  - ./run_tests.sh
+  - docker exec apachedev sh -c 'sed -i '/^#Blacklist.*/s/^#//' /usr/local/apache2/conf/httpd.conf'
+  - docker exec apachedev sh -c './build.sh'
+  - docker exec apachedev sh -c 'apachectl restart'
+  - docker exec apachedev sh -c './run_tests.sh'
