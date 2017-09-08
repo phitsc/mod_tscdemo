@@ -3,36 +3,14 @@
 #include "http_config.h"
 #include "http_protocol.h"
 
+#include "split.hpp"
+
 #include <algorithm>
 #include <string>
 #include <utility> // pair
 #include <vector>
 
 using StringPair = std::pair<std::string, std::string>;
-
-
-std::vector<std::string> split(const std::string& s, const char* divider)
-{
-    std::vector<std::string> result;
-
-    std::string::size_type lastPos = 0;
-    auto pos = s.find(divider);
-
-    while (pos != std::string::npos)
-    {
-        result.push_back(s.substr(lastPos, pos - lastPos));
-
-        lastPos = pos + 1;
-        pos = s.find(divider, pos + 1);
-    }
-
-    if (lastPos < s.size())
-    {
-        result.push_back(s.substr(lastPos));
-    }
-
-    return result;
-}
 
 struct Config
 {
@@ -43,7 +21,7 @@ static Config config;
 
 const char* parseBlacklist(cmd_parms* cmd, void* cfg, const char* arg)
 {
-    config.blacklist = split(arg, ",");
+    config.blacklist = split(arg, ',');
 
     return nullptr;
 }
@@ -70,13 +48,13 @@ static int tscdemo_handler(request_rec* r)
 
     ap_rputs("<ul>", r);
 
-    const auto argumentList = split(args, "&");
+    const auto argumentList = split(args, '&');
     std::vector<StringPair> fieldValueList(argumentList.size());
 
     std::transform(argumentList.begin(), argumentList.end(), fieldValueList.begin(),
         [](const std::string& s)
         {
-            const auto fieldValue = split(s, "=");
+            const auto fieldValue = split(s, '=');
 
             return fieldValue.size() == 1
                 ? std::make_pair(fieldValue[0], "")
