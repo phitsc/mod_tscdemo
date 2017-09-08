@@ -9,7 +9,6 @@
 #include <vector>
 
 using StringPair = std::pair<std::string, std::string>;
-using StringPairs = std::vector<StringPair>;
 
 
 std::vector<std::string> split(const std::string& s, const char* divider)
@@ -67,7 +66,7 @@ static int tscdemo_handler(request_rec* r)
     ap_rputs("<ul>", r);
 
     const auto argumentList = split(args, "&");
-    StringPairs fieldValueList(argumentList.size());
+    std::vector<StringPair> fieldValueList(argumentList.size());
 
     std::transform(argumentList.begin(), argumentList.end(), fieldValueList.begin(),
         [](const std::string& s) -> StringPair
