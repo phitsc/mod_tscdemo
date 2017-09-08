@@ -86,7 +86,7 @@ static int tscdemo_handler(request_rec* r)
         config.blacklist.begin(), config.blacklist.end(),
         [](const StringPair& fieldValue, const std::string& term)
         {
-            return fieldValue.second == term;
+            return fieldValue.second.find(term) != std::string::npos;
         }
     );
 
