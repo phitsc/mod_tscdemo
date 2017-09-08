@@ -19,6 +19,7 @@ To configure the blacklist, use the *Blacklist* entry with a comma-separated lis
 * Use of Docker for Apache HTTP module development
 * Building modules using C++
 * Minimal but meaningful module functionality
+* Static code analysis using cppcheck, including checking of ap_rprintf string formatting
 * Unit testing the module using Catch (http://catch-lib.net)
 * Integration testing the module using Catch and libcurl
 * My coding style and how much I enjoy coding :)
@@ -38,12 +39,14 @@ Build a docker image using an Apache image as a base and adding development tool
 
 ## Build and Run the Module
 
-Once the container is running, open a bash on it, build and install the module, and restart Apache to load the module.
+Once the container is running, open a bash on the container, build and install the module, and restart Apache to load the module.
 
     docker exec -it apachedev bash
     cd ~/mod_tscdemo
     ./build.sh
     apachectl restart
+
+`build.sh` first runs static code analysis and if that succeeds, builds, installs and activates the module.
 
 To restart the container:
 
@@ -58,3 +61,10 @@ To build and run the unit and integration tests:
     ./run_tests.sh
 
 Note that the integration tests will only succeed if a *Blacklist* entry has been added to `httpd.conf` with at least *bar* as one of the blacklist terms.
+
+## References
+
+* How to use g++ and apxs to build C++ modules: https://stackoverflow.com/questions/42605138/how-can-i-write-an-apache-module-in-c
+* Apache HTTP Server 2.4 module developer guide: https://httpd.apache.org/docs/2.4/developer/modguide.html
+* Apache2 API reference: https://ci.apache.org/projects/httpd/trunk/doxygen/
+* Docker reference: https://docs.docker.com/engine/reference/commandline/docker/
