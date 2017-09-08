@@ -9,6 +9,7 @@ before_install:
 
 script:
   - docker exec apachedev sh -c 'sed -i '/^#Blacklist.*/s/^#//' /usr/local/apache2/conf/httpd.conf'
+  - docker exec apachedev sh -c 'mkdir out'
   - docker exec apachedev sh -c './build.sh'
   - docker exec apachedev sh -c 'apachectl restart'
   - docker exec apachedev sh -c './run_tests.sh'
