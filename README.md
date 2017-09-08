@@ -14,7 +14,7 @@ To configure the blacklist, use the *Blacklist* entry with a comma-separated lis
 | http://localhost:4242/anyfile.html?name=philipp&hello=world | mod_tscdemo shows list of blacklist terms and parsed arguments  |
 | http://localhost:4242/anyfile.html?name=philipp&hello=barbapapa&field=value | mod_tscdemo redirects to error page |
 
-## What this Module Demonstrates
+## What this Project Demonstrates
 
 * Use of Docker for Apache HTTP module development
 * Building modules using C++
@@ -22,6 +22,7 @@ To configure the blacklist, use the *Blacklist* entry with a comma-separated lis
 * Static code analysis using cppcheck, including checking of ap_rprintf string formatting
 * Unit testing the module using Catch (http://catch-lib.net)
 * Integration testing the module using Catch and libcurl
+* Continuous integration using Travis CI
 * My coding style and how much I enjoy coding :)
 
 ## Build Docker Image
