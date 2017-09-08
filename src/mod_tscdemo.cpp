@@ -88,7 +88,7 @@ static int tscdemo_handler(request_rec* r)
         ap_rprintf(r, "<li>%s</li>", term.c_str());
     }
 
-    ap_puts("</ul>", r);
+    ap_rputs("</ul>", r);
 
     // Find the first field value containing (substring match) any of the
     // blacklisted terms.
