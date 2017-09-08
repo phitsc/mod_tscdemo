@@ -1,0 +1,15 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t httpd_dev docker
+  - docker run -d -v htdocs:/usr/local/apache2/htdocs -v .:/root/mod_tscdemo -p 127.0.0.1:4242:80 httpd_dev
+
+script:
+  - sed -i '/^#Blacklist.*/s/^#//' /usr/local/apache2/conf/httpd.conf
+  - cd /root/mod_tscdemo
+  - ./build.sh
+  - apachectl restart
+  - ./run_tests.sh
